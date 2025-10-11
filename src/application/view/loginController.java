@@ -75,6 +75,12 @@ public class loginController {
     	/*VINCULA A AÇÃO DO BOTÃO ENTRAR AO METODO LOGIN*/
     	btnEntrar.setOnAction(e->{login();});
     	
+    	/*ACIONAR O ENTER NO TEXT FIEL USUARIO E ACESSAR O PASSWORD FILD DE SENHA*/
+    	txtUsuario.setOnAction(e->{txtSenha.requestFocus();});
+    	
+    	/* ACIONAR O ENTER NO PASSWORD FIELD DE SENHA E ACESSAR O METODO DE LOGIN*/
+    	txtSenha.setOnAction(e->{login();});
+    	
     }
 }
 
