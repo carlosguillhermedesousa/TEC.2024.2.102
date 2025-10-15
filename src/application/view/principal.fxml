@@ -18,8 +18,8 @@
           </Menu>
           <Menu mnemonicParsing="false" text="Cadastros">
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#abrirCadastro" text="Clientes" />
-                  <MenuItem mnemonicParsing="false" text="Funcionários" />
+              <MenuItem mnemonicParsing="false" onAction="#abrirJogo" text="Clientes" />
+                  <MenuItem mnemonicParsing="false" onAction="#abrirFuncionario" text="Funcionários" />
                   <MenuItem mnemonicParsing="false" text="Produtos" />
             </items>
           </Menu>

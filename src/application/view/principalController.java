@@ -14,7 +14,7 @@ public class principalController {
 
 	@FXML
 	private void initialize() {
-		
+		abrirPaginaInicial();
 	}
 	
 	/*METODO PARA CARREGAR AS TELAS NO ANCHOR PANE FORM*/
@@ -56,9 +56,21 @@ public class principalController {
 			e.printStackTrace();
 		}
 	}
-	
+	/*
 	public void abrirCadastro() {
 		carregaTelas("formulario.fxml","Cadastro");
+	}*/
+	
+	public void abrirPaginaInicial() {
+		carregaTelas("planoFundo.fxml","Sistema | Página Inicial");
+	}
+	
+	public void abrirFuncionario() {
+		carregaTelas("funcionario.fxml","Sistema | Cadastro de Funcionarios");
+	}
+	
+	public void abrirJogo() {
+		carregaTelas("jogo.fxml","Sistema | Game");
 	}
 
 }
