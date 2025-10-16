@@ -1,5 +1,6 @@
 package application.view;
 
+import java.util.Date;
 import java.util.List;
 
 import application.dao.funcionarioDAO;
@@ -85,6 +86,67 @@ public class funcionarioController extends formularioController {
 				txtSenha.setText(funcionario.getSenha());
 				txtDataCadastro.setText(funcionario.getDataCadastro().toString());
 			}
+		}
+	}
+	
+	@FXML protected void Salvar() {
+		funcionarioDAO dao = new funcionarioDAO();
+	try {	
+		String nome=txtNome.getText();
+		String cpf=txtCPF.getText();
+		String rg=txtRG.getText();
+		String cargo=txtCargo.getText();
+		String salario=txtSalario.getText();
+		String usuario=txtUsuario.getText();
+		String senha=txtSenha.getText();
+		Date data=new Date();
+		
+		if(statusForm==1) {
+			funcionarioModel novoFuncionario=
+					new funcionarioModel(0,nome,cpf,rg,cargo,
+							salario,usuario,senha,data,data);
+		boolean ok = dao.inserirFuncionario(novoFuncionario);
+		
+		if (ok) {
+			//MENAGEM DE CADASTRO CONCLUIDO
+		} else {
+			//MENSAGEM DE ERRO AO CADASTRAR
+		}
+			
+			
+	} else if(statusForm==2) {
+			int id=tabDados.getSelectionModel().getSelectedItem().getID();
+			funcionarioModel atualizaFuncionario = new funcionarioModel(id,nome,cpf,
+					rg,cargo,salario,usuario,senha,null,null);
+			boolean ok = dao.atualizarFuncionario(atualizaFuncionario);
+					if (ok) {
+						//MENSAGEM DE ALTERAÇÃO BEM SUCEDIDO
+					} else {
+						//MENSAGEM DE ERRO AO ATUALIZAR
+					}
+		} else {return;}
+	}catch (Exception e) {
+		e.printStackTrace();
+		
+	} finally {
+		carregaDados(null);
+	}
+	}
+	
+	@FXML protected void Excluir() {
+		funcionarioDAO dao = new funcionarioDAO();
+		try {
+		int id=tabDados.getSelectionModel().getSelectedItem().getID();
+		boolean ok = dao.excluirFuncionario(id);
+		
+		if(ok) {
+			//MENSAGEM DE EXCLUIDO COM SUCESSO
+			
+		} else {
+			//MENSAGEM DE ERRO AO EXCLUIR
+		}
+		}finally {
+			carregaDados(null);
 		}
 	}
 

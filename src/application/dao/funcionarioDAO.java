@@ -68,10 +68,83 @@ public class funcionarioDAO {
 	}
 	
 	//INSERT
+	public boolean inserirFuncionario(funcionarioModel f) {
+		Connection conn=null;
+		PreparedStatement query = null;
+		try {
+		conn=conexao.getConnection();
+		String sql="insert funcionarios"+
+		"(nome,cpf,rg,cargo,salario,usuario,senha,data_cadastro,data_alteracao)"+
+		" values (?,?,?,?,?,?,?,now(),null)";
+		
+		query=conn.prepareStatement(sql);
+		query.setString(1, f.getNome());
+		query.setString(2, f.getCPF());
+		query.setString(3, f.getRG());
+		query.setString(4, f.getCargo());
+		query.setString(5, f.getSalario());
+		query.setString(6, f.getUsuario());
+		query.setString(7, f.getSenha());
+		
+		int insert = query.executeUpdate();
+		
+		return insert>0;
+		
+		}catch(Exception e ) {
+			e.printStackTrace();
+		return false;
+		}			
+		
+	}
 	
 	//UPDATE
-	
+	public boolean atualizarFuncionario(funcionarioModel f) {
+		Connection conn=null;
+		PreparedStatement query = null;
+		try {
+		conn=conexao.getConnection();
+		String sql="update funcionarios set nome=?, cpf=?, rg=?, cargo=?,"+
+		"salario=?, usuario=?, senha=?, data_alteracao=now() where id_funcionario=?";
+		
+		query=conn.prepareStatement(sql);
+		query.setString(1, f.getNome());
+		query.setString(2, f.getCPF());
+		query.setString(3, f.getRG());
+		query.setString(4, f.getCargo());
+		query.setString(5, f.getSalario());
+		query.setString(6, f.getUsuario());
+		query.setString(7, f.getSenha());
+		query.setInt(8, f.getID());
+		
+		int update = query.executeUpdate();
+		
+		return update>0;
+		
+		}catch(Exception e ) {
+			e.printStackTrace();
+		return false;
+		}		
+	}
 	//DELETE
-	
+	public boolean excluirFuncionario(int id) {
+		Connection conn = null;
+		PreparedStatement query = null;
+		
+		try {
+			conn=conexao.getConnection();
+			
+			String sql="delete from funcionarios where id_funcionario=?";
+			query=conn.prepareStatement(sql);
+			query.setInt(1, id);
+			
+			int delete = query.executeUpdate();
+			
+			return delete>1;
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 	
 }

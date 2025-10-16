@@ -57,14 +57,14 @@ public class formularioController {
 		btnSair.setOnAction(e-> {Sair();});
 		
 		btnNovo.setOnAction(e->{
-			statusForm=0;
+			statusForm=1;
 			emEdicao(true);
 			habilitaCampos(true);
 			limpaCampos();
 		});
 		
 		btnEditar.setOnAction(e->{
-			statusForm=1;
+			statusForm=2;
 			emEdicao(true);
 			habilitaCampos(true);
 		});
