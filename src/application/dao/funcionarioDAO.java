@@ -28,7 +28,7 @@ public class funcionarioDAO {
 			if(desc!=null && !desc.isEmpty()) {
 				sql="select *from funcionarios where nome like ?";
 				query=conn.prepareStatement(sql);
-				query.setString(1, "%"+sql+"%");
+				query.setString(1, "%"+desc+"%");
 			} else {
 				query=conn.prepareStatement(sql);
 			}

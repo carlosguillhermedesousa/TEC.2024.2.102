@@ -19,10 +19,7 @@ public class formularioController {
     @FXML protected Button btnNovo;
     @FXML protected Button btnSair;
     @FXML protected Button btnSalvar;
-    @FXML protected TableColumn<?, ?> colDescricao;
-    @FXML protected TableColumn<?, ?> colID;
-    @FXML protected AnchorPane formCadastro;
-    @FXML protected TableView<?> tabDados;
+    @FXML protected AnchorPane formCadastro;    
     @FXML protected TextField txtBuscar;
     protected int statusForm;
     
