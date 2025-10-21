@@ -5,6 +5,7 @@ import java.util.List;
 
 import application.dao.funcionarioDAO;
 import application.model.funcionarioModel;
+import application.util.metodo;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -109,8 +110,10 @@ public class funcionarioController extends formularioController {
 		
 		if (ok) {
 			//MENAGEM DE CADASTRO CONCLUIDO
+			metodo.mensagem("Confirmado", null, "Funcionário salvo com sucesso.", "0");
 		} else {
 			//MENSAGEM DE ERRO AO CADASTRAR
+			metodo.mensagem("Erro", null, "Erro ao salvar funcionário.", "0");
 		}
 			
 			
@@ -121,8 +124,10 @@ public class funcionarioController extends formularioController {
 			boolean ok = dao.atualizarFuncionario(atualizaFuncionario);
 					if (ok) {
 						//MENSAGEM DE ALTERAÇÃO BEM SUCEDIDO
+						metodo.mensagem("Confirmado", null, "Funcionário alterado com sucesso.", "0");
 					} else {
 						//MENSAGEM DE ERRO AO ATUALIZAR
+						metodo.mensagem("Erro", null, "Erro ao alterar funcionário.", "2");
 					}
 		} else {return;}
 	}catch (Exception e) {
@@ -141,9 +146,11 @@ public class funcionarioController extends formularioController {
 		
 		if(ok) {
 			//MENSAGEM DE EXCLUIDO COM SUCESSO
+			metodo.mensagem("Confirmado", null, "Funcionário excluído com sucesso.", "0");
 			
 		} else {
 			//MENSAGEM DE ERRO AO EXCLUIR
+			metodo.mensagem("Erro", null, "Erro ao excluir funcionário.", "0");
 		}
 		}finally {
 			carregaDados(null);

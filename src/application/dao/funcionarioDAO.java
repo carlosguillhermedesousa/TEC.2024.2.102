@@ -11,6 +11,27 @@ import application.util.conexao;
 
 public class funcionarioDAO {
 
+	//AUTENTICAR USUARIO E SENHA
+	public boolean autenticar (String usuario, String senha) {
+		try {
+			String sql="select *from funcionarios where BINARY usuario=? and BINARY senha=?";
+			
+			Connection conn= conexao.getConnection();
+			PreparedStatement query = conn.prepareStatement(sql);
+			
+			query.setString(1, usuario);
+			query.setString(2, senha);
+			
+			ResultSet resultado = query.executeQuery();
+			return resultado.next();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		
+	}
+	
 	
 	//LISTAR
 	
@@ -139,7 +160,7 @@ public class funcionarioDAO {
 			
 			int delete = query.executeUpdate();
 			
-			return delete>1;
+			return delete>0;
 			
 		}catch (Exception e) {
 			e.printStackTrace();

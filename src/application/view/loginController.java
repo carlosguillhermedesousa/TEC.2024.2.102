@@ -1,5 +1,6 @@
 package application.view;
 
+import application.dao.funcionarioDAO;
 import application.util.metodo;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -32,7 +33,10 @@ public class loginController {
     	
     	Alert mensagem;
     	
-    	if(usuario.equals("admin") && senha.equals("123")) {
+    	funcionarioDAO dao=new funcionarioDAO();
+    	
+    	if (dao.autenticar(usuario, senha)) {
+    		//if(usuario.equals("admin") && senha.equals("123"))
     		/*mensagem= new Alert(Alert.AlertType.CONFIRMATION);//CRIA UMA NOVA MENSAGEM
     		mensagem.setTitle("Confirmação");//INFORMA O TITULO DA MENSAGEM
     		mensagem.setHeaderText(null);//REMOVE O CABEÇALHO DA MENSAGEM

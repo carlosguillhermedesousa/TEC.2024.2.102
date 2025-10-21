@@ -1,5 +1,6 @@
 package application.view;
 
+import application.util.metodo;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -69,8 +70,16 @@ public class principalController {
 		carregaTelas("funcionario.fxml","Sistema | Cadastro de Funcionarios");
 	}
 	
+	public void abrirProduto() {
+		carregaTelas("produto.fxml","Sistema | Cadastro de Produtos");
+	}
+	
 	public void abrirJogo() {
 		carregaTelas("jogo.fxml","Sistema | Game");
 	}
-
+	
+	@FXML 
+	private void abrirFrenteCaixa() {
+    	 metodo.abrirJanelaModal("frenteCaixa.fxml", null,  ((Stage) form.getScene().getWindow()));
+    } 
 }
