@@ -38,6 +38,7 @@ public class produtoDAO {
 							resultado.getInt("id_produto"),
 							resultado.getString("nome"),
 							resultado.getString("descricao"),
+							resultado.getString("codbarras"),
 							resultado.getDouble("preco"),
 							resultado.getInt("estoque"),
 							resultado.getDate("data_cadastro"),
@@ -46,6 +47,7 @@ public class produtoDAO {
 					p.setID(resultado.getInt("id_produto"));
 					p.setNome(resultado.getString("nome"));
 					p.setDescricao(resultado.getString("descricao"));
+					p.setCodBarra(resultado.getString("codbarras"));
 					p.setPreco(resultado.getDouble("preco"));
 					p.setEstoque(resultado.getInt("estoque"));
 					p.setDataCadastro(resultado.getDate("data_cadastro"));
@@ -66,14 +68,15 @@ public class produtoDAO {
 			try {
 			conn=conexao.getConnection();
 			String sql="insert produtos"+
-			"(nome,descricao,preco,estoque,data_cadastro,data_alteracao)"+
-			" values (?,?,?,?,now(),null)";
+			"(nome,descricao,codbarras,preco,estoque,data_cadastro,data_alteracao)"+
+			" values (?,?,?,?,?,now(),null)";
 			
 			query=conn.prepareStatement(sql);
 			query.setString(1, p.getNome());
 			query.setString(2, p.getDescricao());
-			query.setDouble(3, p.getPreco());
-			query.setInt(4, p.getEstoque());
+			query.setString(3, p.getCodBarra());
+			query.setDouble(4, p.getPreco());
+			query.setInt(5, p.getEstoque());
 			
 			
 			int insert = query.executeUpdate();
@@ -93,15 +96,16 @@ public class produtoDAO {
 			PreparedStatement query = null;
 			try {
 			conn=conexao.getConnection();
-			String sql="update produtos set nome=?, descricao=?, preco=?, estoque=?,"+
+			String sql="update produtos set nome=?, descricao=?,codbarras=?, preco=?, estoque=?,"+
 			" data_alteracao=now() where id_produto=?";
 			
 			query=conn.prepareStatement(sql);
 			query.setString(1, p.getNome());
 			query.setString(2, p.getDescricao());
-			query.setDouble(3, p.getPreco());
-			query.setInt(4, p.getEstoque());
-			query.setInt(5, p.getID());
+			query.setString(3, p.getCodBarra());
+			query.setDouble(4, p.getPreco());
+			query.setInt(5, p.getEstoque());
+			query.setInt(6, p.getID());
 			
 			int update = query.executeUpdate();
 			

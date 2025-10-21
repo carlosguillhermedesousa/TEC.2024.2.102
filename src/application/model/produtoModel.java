@@ -8,6 +8,7 @@ public class produtoModel {
     private String descricao;
     private Double preco;
     private int estoque;
+    private String codBarra;
     private Date data_cadastro;
     private Date data_alteracao;
 
@@ -15,6 +16,7 @@ public class produtoModel {
             int id_produto,
             String nome,
             String descricao,
+            String codBarra,
             Double preco,
             int estoque,
             Date data_cadastro,
@@ -23,6 +25,7 @@ public class produtoModel {
         this.id_produto = id_produto;
         this.nome = nome;
         this.descricao = descricao;
+        this.codBarra=codBarra;
         this.preco = preco;
         this.estoque = estoque;
         this.data_cadastro = data_cadastro;
@@ -39,6 +42,9 @@ public class produtoModel {
 
     public String getDescricao() {return descricao; }
     public void setDescricao(String descricao) {this.descricao = descricao;}
+    
+    public String getCodBarra() {return codBarra; }
+    public void setCodBarra(String codBarra) {this.codBarra = codBarra;}
 
     public Double getPreco() {return preco;}
     public void setPreco(Double preco) {this.preco = preco;}

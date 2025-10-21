@@ -23,6 +23,7 @@ public class produtoController extends formularioController {
 	@FXML protected TextField txtDescricao;
 	@FXML protected TextField txtEstoque;
 	@FXML protected TextField txtNome;
+	@FXML protected TextField txtCodBarra;
 	@FXML protected TextField txtPreco;
 	 
 	@FXML protected TableView<produtoModel> tabDados;
@@ -48,7 +49,8 @@ public class produtoController extends formularioController {
 				(obs, selecao , novaSelecao) ->{
 					if (novaSelecao != null) {
 						txtNome.setText(novaSelecao.getNome());
-						txtDescricao.setText(novaSelecao.getDescricao());						
+						txtDescricao.setText(novaSelecao.getDescricao());
+						txtCodBarra.setText(novaSelecao.getCodBarra());
 						txtEstoque.setText(String.valueOf(novaSelecao.getEstoque()));
 						txtPreco.setText(novaSelecao.getPreco().toString());
 						txtData.setText(novaSelecao.getDataCadastro().toString());
@@ -78,6 +80,7 @@ public class produtoController extends formularioController {
 			if(produto != null) {
 				txtNome.setText(produto.getNome());
 				txtDescricao.setText(produto.getDescricao());
+				txtCodBarra.setText(produto.getCodBarra());
 				txtEstoque.setText(String.valueOf(produto.getEstoque()));
 				txtPreco.setText(produto.getPreco().toString());
 				txtData.setText(produto.getDataCadastro().toString());
@@ -90,13 +93,14 @@ public class produtoController extends formularioController {
 	try {	
 		String nome=txtNome.getText();
 		String descricao=txtDescricao.getText();
+		String codBarra=txtCodBarra.getText();
 		Integer estoque=Integer.valueOf(txtEstoque.getText());
 		Double preco=Double.valueOf(txtPreco.getText());
 		Date data=new Date();
 		
 		if(statusForm==1) {
 			produtoModel novoProduto=
-					new produtoModel(0,nome,descricao,preco,estoque,data,data);
+					new produtoModel(0,nome,descricao,codBarra,preco,estoque,data,data);
 		boolean ok = dao.inserirProduto(novoProduto);
 		
 		if (ok) {
@@ -110,7 +114,7 @@ public class produtoController extends formularioController {
 			
 	} else if(statusForm==2) {
 			int id=tabDados.getSelectionModel().getSelectedItem().getID();
-			produtoModel atualizaProduto = new produtoModel(id,nome,descricao,
+			produtoModel atualizaProduto = new produtoModel(id,nome,descricao,codBarra,
 					preco,estoque,null,null);
 			boolean ok = dao.atualizarProduto(atualizaProduto);
 					if (ok) {
