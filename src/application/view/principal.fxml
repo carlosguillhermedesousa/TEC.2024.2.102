@@ -12,13 +12,14 @@
         <menus>
           <Menu mnemonicParsing="false" text="Inicio">
             <items>
+                  <MenuItem mnemonicParsing="false" onAction="#abrirPaginaInicial" text="Home" />
               <MenuItem mnemonicParsing="false" onAction="#loggout" text="Loggout" />
                   <MenuItem mnemonicParsing="false" onAction="#close" text="Fechar" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Cadastros">
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#abrirJogo" text="Clientes" />
+              <MenuItem mnemonicParsing="false" onAction="#abrirCliente" text="Clientes" />
                   <MenuItem mnemonicParsing="false" onAction="#abrirFuncionario" text="Funcionários" />
                   <MenuItem mnemonicParsing="false" onAction="#abrirProduto" text="Produtos" />
             </items>
@@ -28,6 +29,18 @@
                 <MenuItem mnemonicParsing="false" onAction="#abrirFrenteCaixa" text="Frente de Caixa" />
                   <MenuItem mnemonicParsing="false" text="Processa Estoque" />
               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Relatórios">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Relatório de Vendas" />
+                  <MenuItem mnemonicParsing="false" text="Relatório de Estoque" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Sistema">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Configuração" />
+                  <MenuItem mnemonicParsing="false" text="Controle de Acesso" />
+               </items>
             </Menu>
         </menus>
       </MenuBar>

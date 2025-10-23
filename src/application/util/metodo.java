@@ -2,12 +2,14 @@ package application.util;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -93,9 +95,12 @@ private static final Map<String, Stage> janelasAbertas = new HashMap<>(); //
 			type=AlertType.CONFIRMATION;
 			break;
 		case "1":
-			type=AlertType.WARNING;
+			type=AlertType.INFORMATION;
 			break;
 		case "2":
+			type=AlertType.WARNING;
+			break;
+		case "3":
 			type=AlertType.ERROR;
 			break;
 		default :
@@ -117,6 +122,22 @@ private static final Map<String, Stage> janelasAbertas = new HashMap<>(); //
         } catch (NumberFormatException e) {
             return defaultValue;
         }
+    }
+
+    public static boolean mensagemConfirmacao(String titulo, String cabecalho, String texto) {
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setTitle(titulo);
+        alert.setHeaderText(cabecalho);
+        alert.setContentText(texto);
+
+        // Define os botões como SIM e NÃO
+        ButtonType SIM = new ButtonType("Sim");
+        ButtonType NAO = new ButtonType("Não");
+
+        alert.getButtonTypes().setAll(SIM, NAO);
+
+        Optional<ButtonType> result = alert.showAndWait();
+        return result.isPresent() && result.get() == SIM;
     }
 
 }

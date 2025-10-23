@@ -24,7 +24,12 @@ public class loginController {
 /*FINAL ENCAPSULAMENTO*/    
     
 /*METODO PARA FECHAR O SISTEMA*/
-    public void close() {System.exit(0);}
+    //public void close() {System.exit(0);}
+	public void close() {
+		if (metodo.mensagemConfirmacao("Fechar Sistema", null, "Deseja fechar o sistema?")) {
+			System.exit(0);
+		}		
+	}
 
 /*METODO DE ENTRAR OU LOGIN*/   
     public void login() {

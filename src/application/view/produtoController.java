@@ -1,5 +1,6 @@
 package application.view;
 
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 
@@ -25,6 +26,7 @@ public class produtoController extends formularioController {
 	@FXML protected TextField txtNome;
 	@FXML protected TextField txtCodBarra;
 	@FXML protected TextField txtPreco;
+	
 	 
 	@FXML protected TableView<produtoModel> tabDados;
 	@FXML protected TableColumn<produtoModel, Integer> colID;
@@ -84,6 +86,9 @@ public class produtoController extends formularioController {
 				txtEstoque.setText(String.valueOf(produto.getEstoque()));
 				txtPreco.setText(produto.getPreco().toString());
 				txtData.setText(produto.getDataCadastro().toString());
+				dtCadastro.setValue(produto.getDataCadastro().toInstant()
+                        .atZone(ZoneId.systemDefault())
+                        .toLocalDate());
 			}
 		}
 	}

@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -21,6 +22,7 @@ public class formularioController {
     @FXML protected Button btnSalvar;
     @FXML protected AnchorPane formCadastro;    
     @FXML protected TextField txtBuscar;
+    @FXML protected DatePicker dtCadastro;
     protected int statusForm;
     
     @FXML

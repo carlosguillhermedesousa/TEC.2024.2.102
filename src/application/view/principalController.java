@@ -40,7 +40,11 @@ public class principalController {
 		} catch(Exception e){e.printStackTrace();}
 	}
 	
-	public void close() {System.exit(0);}
+	public void close() {
+		if (metodo.mensagemConfirmacao("Fechar Sistema", null, "Deseja fechar o sistema?")) {
+			System.exit(0);
+		}		
+	}
 	
 	public void loggout() {
 		//FECHAR A TELA ATUAL
@@ -75,9 +79,13 @@ public class principalController {
 	}
 	
 	public void abrirJogo() {
-		carregaTelas("jogo.fxml","Sistema | Game");
+		//carregaTelas("jogo.fxml","Sistema | Game");
 	}
 	
+	
+	public void abrirCliente() {
+		carregaTelas("cliente.fxml","Sistema | Cadastro de Clientes");
+	}
 	@FXML 
 	private void abrirFrenteCaixa() {
     	 metodo.abrirJanelaModal("frenteCaixa.fxml", null,  ((Stage) form.getScene().getWindow()));
