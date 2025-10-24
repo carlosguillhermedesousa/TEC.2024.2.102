@@ -1,5 +1,6 @@
 package application;
 	
+import application.util.metodo;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
@@ -17,7 +18,7 @@ public class Main extends Application {
 			Scene scene = new Scene(root);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.initStyle(StageStyle.UNDECORATED);
-			primaryStage.setScene(scene);
+			primaryStage.setScene(scene);       
 			primaryStage.show();
 		} catch(Exception e) {
 			e.printStackTrace();

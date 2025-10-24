@@ -97,10 +97,10 @@ public class clienteController extends formularioController {
 		
 		if (ok) {
 			//MENAGEM DE CADASTRO CONCLUIDO
-			metodo.mensagem("Confirmado", null, "Cliente salvo com sucesso.", "0");
+			metodo.mensagem("Confirmado", null, "Cliente salvo com sucesso.", "1");
 		} else {
 			//MENSAGEM DE ERRO AO CADASTRAR
-			metodo.mensagem("Erro", null, "Erro ao salvar Cliente.", "0");
+			metodo.mensagem("Erro", null, "Erro ao salvar Cliente.", "3");
 		}
 			
 			
@@ -111,10 +111,10 @@ public class clienteController extends formularioController {
 			boolean ok = dao.atualizarCliente(atualizaCliente);
 					if (ok) {
 						//MENSAGEM DE ALTERAÇÃO BEM SUCEDIDO
-						metodo.mensagem("Confirmado", null, "Cliente alterado com sucesso.", "0");
+						metodo.mensagem("Confirmado", null, "Cliente alterado com sucesso.", "1");
 					} else {
 						//MENSAGEM DE ERRO AO ATUALIZAR
-						metodo.mensagem("Erro", null, "Erro ao alterar cliente.", "2");
+						metodo.mensagem("Erro", null, "Erro ao alterar cliente.", "3");
 					}
 		} else {return;}
 	}catch (Exception e) {
@@ -133,11 +133,11 @@ public class clienteController extends formularioController {
 		
 		if(ok) {
 			//MENSAGEM DE EXCLUIDO COM SUCESSO
-			metodo.mensagem("Confirmado", null, "Cliente excluído com sucesso.", "0");
+			metodo.mensagem("Confirmado", null, "Cliente excluído com sucesso.", "1");
 			
 		} else {
 			//MENSAGEM DE ERRO AO EXCLUIR
-			metodo.mensagem("Erro", null, "Erro ao excluir cliente.", "0");
+			metodo.mensagem("Erro", null, "Erro ao excluir cliente.", "3");
 		}
 		}finally {
 			carregaDados(null);

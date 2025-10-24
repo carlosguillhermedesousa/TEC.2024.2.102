@@ -110,10 +110,10 @@ public class funcionarioController extends formularioController {
 		
 		if (ok) {
 			//MENAGEM DE CADASTRO CONCLUIDO
-			metodo.mensagem("Confirmado", null, "Funcionário salvo com sucesso.", "0");
+			metodo.mensagem("Confirmado", null, "Funcionário salvo com sucesso.", "1");
 		} else {
 			//MENSAGEM DE ERRO AO CADASTRAR
-			metodo.mensagem("Erro", null, "Erro ao salvar funcionário.", "0");
+			metodo.mensagem("Erro", null, "Erro ao salvar funcionário.", "3");
 		}
 			
 			
@@ -124,10 +124,10 @@ public class funcionarioController extends formularioController {
 			boolean ok = dao.atualizarFuncionario(atualizaFuncionario);
 					if (ok) {
 						//MENSAGEM DE ALTERAÇÃO BEM SUCEDIDO
-						metodo.mensagem("Confirmado", null, "Funcionário alterado com sucesso.", "0");
+						metodo.mensagem("Confirmado", null, "Funcionário alterado com sucesso.", "1");
 					} else {
 						//MENSAGEM DE ERRO AO ATUALIZAR
-						metodo.mensagem("Erro", null, "Erro ao alterar funcionário.", "2");
+						metodo.mensagem("Erro", null, "Erro ao alterar funcionário.", "3");
 					}
 		} else {return;}
 	}catch (Exception e) {
@@ -146,11 +146,11 @@ public class funcionarioController extends formularioController {
 		
 		if(ok) {
 			//MENSAGEM DE EXCLUIDO COM SUCESSO
-			metodo.mensagem("Confirmado", null, "Funcionário excluído com sucesso.", "0");
+			metodo.mensagem("Confirmado", null, "Funcionário excluído com sucesso.", "1");
 			
 		} else {
 			//MENSAGEM DE ERRO AO EXCLUIR
-			metodo.mensagem("Erro", null, "Erro ao excluir funcionário.", "0");
+			metodo.mensagem("Erro", null, "Erro ao excluir funcionário.", "3");
 		}
 		}finally {
 			carregaDados(null);

@@ -139,5 +139,20 @@ private static final Map<String, Stage> janelasAbertas = new HashMap<>(); //
         Optional<ButtonType> result = alert.showAndWait();
         return result.isPresent() && result.get() == SIM;
     }
+    
+    /*
+      private void confirmarSaida(Stage stage) {
+        Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
+        alerta.setTitle("Confirmação");
+        alerta.setHeaderText("Deseja realmente sair do sistema?");
+        alerta.setContentText("Clique em OK para sair ou Cancelar para continuar.");
+
+        alerta.showAndWait().ifPresent(resposta -> {
+            if (resposta == ButtonType.OK) {
+                stage.close(); // Fecha a janela
+            }
+        });
+    }
+     */
 
 }

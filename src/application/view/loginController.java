@@ -48,7 +48,7 @@ public class loginController {
     		mensagem.setContentText("Bem vindo ao Sistema "+usuario);//TEXTO DO CORPO DA MENSAGEM
     		mensagem.showAndWait();//MOSTRA A MENSAGEM*/
     		
-    		metodo.mensagem("Confirmação", null, "Bem vindo Ao Sistema", "0");
+    		metodo.mensagem("Confirmação", null, "Bem vindo Ao Sistema", "1");
     		
     		/*FECHAR TELA DE LOGIN*/
     		btnEntrar.getScene().getWindow().hide();
@@ -62,6 +62,14 @@ public class loginController {
     		stage.setTitle("Sistema by Carlos Guilherme");//TITULO DO FORMULÁRIO
     		stage.centerOnScreen();//ENTRALIZAR FORMULÁRIO
     		stage.setMaximized(true);//INICIALIZA FORMULÁRIO MAXIMIZADO
+    		// Evento de fechamento
+	        stage.setOnCloseRequest(e -> {
+	            e.consume(); // Impede o fechamento automático
+	            //confirmarSaida(primaryStage);
+	            if(metodo.mensagemConfirmacao("Fechar Sistema", null, "Deseja fechar o sistema?")) {
+	            	stage.close();
+	            }
+	        });
     		stage.show();//MOSTRA O FORMULÁRIO
     		}catch(Exception e) {
     			e.printStackTrace();
@@ -71,8 +79,9 @@ public class loginController {
     		mensagem.setTitle("Erro");//INFORMA O TITULO DA MENSAGEM
     		mensagem.setHeaderText(null);//REMOVE O CABEÇALHO DA MENSAGEM
     		mensagem.setContentText("Usuário ou Senha incorretos!");//TEXTO DO CORPO DA MENSAGEM
-    		mensagem.showAndWait();//MOSTRA A MENSAGEM*/
-    		metodo.mensagem("Erro", null, "Usuário ou Senha incorretos", "2");
+    		mensagem.showAndWait();*/
+    		//MOSTRA A MENSAGEM
+    		metodo.mensagem("Erro", null, "Usuário ou Senha incorretos", "3");
     	}
     }
     

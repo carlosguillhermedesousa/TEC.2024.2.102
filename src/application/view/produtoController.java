@@ -110,10 +110,10 @@ public class produtoController extends formularioController {
 		
 		if (ok) {
 			//MENAGEM DE CADASTRO CONCLUIDO
-			metodo.mensagem("Confirmado", null, "Produto salvo com sucesso.", "0");
+			metodo.mensagem("Confirmado", null, "Produto salvo com sucesso.", "1");
 		} else {
 			//MENSAGEM DE ERRO AO CADASTRAR
-			metodo.mensagem("Erro", null, "Erro ao salvar Produto.", "0");
+			metodo.mensagem("Erro", null, "Erro ao salvar Produto.", "3");
 		}
 			
 			
@@ -124,10 +124,10 @@ public class produtoController extends formularioController {
 			boolean ok = dao.atualizarProduto(atualizaProduto);
 					if (ok) {
 						//MENSAGEM DE ALTERAÇÃO BEM SUCEDIDO
-						metodo.mensagem("Confirmado", null, "Produto alterado com sucesso.", "0");
+						metodo.mensagem("Confirmado", null, "Produto alterado com sucesso.", "1");
 					} else {
 						//MENSAGEM DE ERRO AO ATUALIZAR
-						metodo.mensagem("Erro", null, "Erro ao alterar Produto.", "2");
+						metodo.mensagem("Erro", null, "Erro ao alterar Produto.", "3");
 					}
 		} else {return;}
 	}catch (Exception e) {
