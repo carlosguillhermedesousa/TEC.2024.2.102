@@ -1,5 +1,6 @@
 package application.view;
 
+import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
@@ -15,6 +16,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 
 public class produtoController extends formularioController {
@@ -38,11 +40,15 @@ public class produtoController extends formularioController {
 		super.init();
 		
 		
-		colID.setCellValueFactory(data-> new javafx.beans.property.SimpleIntegerProperty(
+		/*colID.setCellValueFactory(data-> new javafx.beans.property.SimpleIntegerProperty(
 				data.getValue().getID()).asObject());
-		
 		colDescricao.setCellValueFactory(data-> new javafx.beans.property.SimpleStringProperty(
-				data.getValue().getNome()));
+				data.getValue().getNome()));		
+				*/
+		colID.setCellValueFactory(new PropertyValueFactory<>("ID"));
+		colDescricao.setCellValueFactory(new PropertyValueFactory<>("Nome"));
+		
+		
 		
 		carregaDados(null);
 		
@@ -80,15 +86,18 @@ public class produtoController extends formularioController {
 			
 			produtoModel produto = tabDados.getSelectionModel().getSelectedItem();
 			if(produto != null) {
+				/*LocalDate localDate=produto.getDataCadastro().toInstant()
+                        .atZone(ZoneId.systemDefault())
+                        .toLocalDate();*/
+				
 				txtNome.setText(produto.getNome());
 				txtDescricao.setText(produto.getDescricao());
 				txtCodBarra.setText(produto.getCodBarra());
 				txtEstoque.setText(String.valueOf(produto.getEstoque()));
 				txtPreco.setText(produto.getPreco().toString());
 				txtData.setText(produto.getDataCadastro().toString());
-				dtCadastro.setValue(produto.getDataCadastro().toInstant()
-                        .atZone(ZoneId.systemDefault())
-                        .toLocalDate());
+				//dtCadastro.setValue(produto.getDataCadastro().toLocalDate());
+				
 			}
 		}
 	}
