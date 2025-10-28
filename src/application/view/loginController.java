@@ -4,13 +4,17 @@ import application.dao.funcionarioDAO;
 import application.util.metodo;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.ImageCursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import application.util.metodo;
 
 public class loginController {
 /* ENCAPSULAMENTO DOS COMPONENTES DO FORMULÁRIO */
@@ -54,9 +58,12 @@ public class loginController {
     		btnEntrar.getScene().getWindow().hide();
     		try {
     		Parent root = FXMLLoader.load(getClass().getResource("principal.fxml"));
+    		
     		Stage stage = new Stage();
     		Scene scene = new Scene(root);
-    		
+    		//metodo.cursorMouse(scene);
+    		//metodo.ativarImagem(scene, stage);
+    	    
     		/*CONFIGURA PROPIEDADES DA TELA OU FORMULÁRIO*/
     		stage.setScene(scene);
     		stage.setTitle("Sistema by Carlos Guilherme");//TITULO DO FORMULÁRIO

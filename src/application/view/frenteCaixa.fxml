@@ -55,12 +55,12 @@
                                               <RowConstraints maxHeight="44.60001220703125" minHeight="10.0" prefHeight="34.20001831054687" vgrow="SOMETIMES" />
                                             </rowConstraints>
                                              <children>
-                                                <TextField fx:id="edtBusca" prefHeight="25.0" prefWidth="416.0" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+                                                <TextField fx:id="txtBusca" prefHeight="25.0" prefWidth="416.0" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
                                                    <font>
                                                       <Font size="14.0" />
                                                    </font>
                                                 </TextField>
-                                                <TextField fx:id="edtQuantidade" alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+                                                <TextField fx:id="txtQuantidade" alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
                                                    <font>
                                                       <Font size="14.0" />
                                                    </font>

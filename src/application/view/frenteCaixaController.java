@@ -1,5 +1,7 @@
 package application.view;
 
+import javafx.application.Platform;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -11,6 +13,10 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javafx.scene.layout.AnchorPane;
+
+import java.util.List;
+
+import application.dao.produtoDAO;
 import application.model.itemModel;
 import application.model.produtoModel;
 import application.util.metodo;
@@ -18,8 +24,8 @@ import application.util.metodo;
 public class frenteCaixaController {
 
     @FXML private AnchorPane formFrenteCaixa;    
-    @FXML private TextField edtQuantidade;    
-    @FXML private TextField edtBusca;
+    @FXML private TextField txtQuantidade;    
+    @FXML private TextField txtBusca;
     @FXML private Label lblTipoBusca;
     @FXML private TableView<produtoModel> tabItem;
     @FXML private TableColumn<produtoModel, String> tabDescricao;
@@ -56,7 +62,7 @@ public class frenteCaixaController {
 	colValorTotal.setCellValueFactory(new PropertyValueFactory<>("ValorTotal"));
 		
     	
-    	edtQuantidade.setText("1");
+    	txtQuantidade.setText("1");
     	
         formFrenteCaixa.sceneProperty().addListener((obs, oldScene, newScene) -> {// Adiciona listener depois que a cena estiver carregada
             if (newScene != null) {          	         	
@@ -80,9 +86,8 @@ public class frenteCaixaController {
                             stage.close();
                             break;
                         case MULTIPLY: // Teclado numérico (*)
-                        	edtQuantidade.requestFocus(); 
+                        		txtQuantidade.requestFocus(); 
                         	//System.out.println("Teclado numérico * pressionado");
-                        	//
                             break;
                         default:
                         	
@@ -92,32 +97,32 @@ public class frenteCaixaController {
             }
         });
     
-        edtQuantidade.addEventFilter(KeyEvent.KEY_TYPED, event -> {
+        txtQuantidade.addEventFilter(KeyEvent.KEY_TYPED, event -> {
             if ("*".equals(event.getCharacter())) {
                 event.consume(); // Bloqueia o * dentro do edtQuantidade
             }
         });
         
-        edtQuantidade.setOnAction(e-> {
-        	if(edtQuantidade.getText().trim().isEmpty()) { 	
-        		edtQuantidade.setText("1");
-        		edtBusca.requestFocus();
+        txtQuantidade.setOnAction(e-> {
+        	if(txtQuantidade.getText().trim().isEmpty()) { 	
+        		txtQuantidade.setText("1");
+        		txtBusca.requestFocus();
         		
         	} else {
-        		edtQuantidade.setText(String.valueOf(metodo.strToIntDef(edtQuantidade.getText(),1)));
+        		txtQuantidade.setText(String.valueOf(metodo.strToIntDef(txtQuantidade.getText(),1)));
         		//edtQuantidade.setText(Integer.toString(WindowHelper.strToIntDef(edtQuantidade.getText(),1)));
-        		edtBusca.requestFocus();
+        		txtBusca.requestFocus();
         	}
         	
         });
         
-        edtBusca.setOnAction(e->{
+        txtBusca.setOnAction(e->{
         	//inserir o produto 
         	
-        	if (edtBusca.getText().equals("*")) {
-        		edtBusca.setText(null);
-        		edtQuantidade.requestFocus(); 
-                edtQuantidade.setText("");
+        	if (txtBusca.getText().equals("*")) {
+        		txtBusca.setText(null);
+        		txtQuantidade.requestFocus(); 
+                txtQuantidade.setText("");
                 return;
         	};
         	
@@ -126,17 +131,17 @@ public class frenteCaixaController {
         	
         });
         
-        edtBusca.setOnKeyPressed(event -> {
+        txtBusca.setOnKeyPressed(event -> {
             KeyCode key = event.getCode();
             
             if ((key == KeyCode.MULTIPLY) || ("*".equals(event.getText()))) {// Se for o * do teclado numérico
                 //System.out.println("Detectado * do teclado numérico no edtBusca");
             	event.consume();
-                edtQuantidade.requestFocus(); 
-                edtQuantidade.setText("");
+                txtQuantidade.requestFocus(); 
+                txtQuantidade.setText("");
             }
             
-            if (edtBusca.getText()=="") {
+            if (txtBusca.getText()=="") {
 	            	lblTipoBusca.setText("Código de Barras Produto");
 	            	buscaDescricao=false;
 	            	tabItemVisualizacao(buscaDescricao);            	
@@ -146,14 +151,19 @@ public class frenteCaixaController {
 	            	if (!buscaDescricao) {
 	            		buscaDescricao=true;
 	            		lblTipoBusca.setText("Descrição Produto");
-	            		edtBusca.setText("");
+	            		txtBusca.setText("");
 	            	}
             }
+            
+            if (key == KeyCode.DOWN) {
+            	Platform.runLater(() -> tabItem.requestFocus());
+            }
         	
-            edtBusca.textProperty().addListener((observable, oldValue, newValue) -> {
+            txtBusca.textProperty().addListener((observable, oldValue, newValue) -> {
 	    		    if(buscaDescricao) {
 		            	if (newValue.length() >= 3) {
 		            		tabItemVisualizacao(buscaDescricao);
+		            		buscaItemDescricao();
 		    		    } 
 	            	}
     			});
@@ -166,11 +176,18 @@ public class frenteCaixaController {
         });
     }
         
-        private void tabItemVisualizacao(boolean status) {
+    private void tabItemVisualizacao(boolean status) {
 	        	tabItem.setVisible(status);
 	    		tabItem.setManaged(status);
 	    		//percentual=status;
 	        	if (status) {}        
-        }
+    }
         
+        public void buscaItemDescricao(){
+	        	produtoDAO dao = new produtoDAO();
+	    		List<produtoModel> produtos= dao.listarProdutos(txtBusca.getText().replace("%", ""));
+	    		produtoList=FXCollections.observableArrayList(produtos);
+	    		tabItem.setItems(produtoList);
+	    		
+        }
 }

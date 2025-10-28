@@ -4,20 +4,25 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+import application.Main;
+import application.view.principalController;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.ImageCursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 public class metodo {
 
-private static final Map<String, Stage> janelasAbertas = new HashMap<>(); // 
+	private static final Map<String, Stage> janelasAbertas = new HashMap<>(); // 
 	
     public static void abrirJanela(String fxml, String titulo) {    	
         if (janelasAbertas.containsKey(fxml)) {// Verifica se a janela já está aberta
@@ -68,6 +73,7 @@ private static final Map<String, Stage> janelasAbertas = new HashMap<>(); //
             Stage stage = new Stage();
             stage.setTitle(titulo);
             stage.setScene(new Scene(root));
+            //cursorMouse(stage.getScene());
             //stage.getIcons().add(new Image(metodo.class.getResourceAsStream("/application/util/icon.png")));
             stage.initStyle(StageStyle.UNDECORATED);
             stage.centerOnScreen();
@@ -155,4 +161,33 @@ private static final Map<String, Stage> janelasAbertas = new HashMap<>(); //
     }
      */
 
+    
+    public static void cursorMouse(Scene scene) {
+    	// SETAR IMAGEM COMO CURSOR DO MOUSE
+	    Image cursorImage = new Image(metodo.class.getResourceAsStream("/application/view/f1_vermelho.png"));
+	    ImageCursor imagemCursor = new ImageCursor(cursorImage, cursorImage.getWidth() / 2, cursorImage.getHeight() / 2);
+	    scene.setCursor(imagemCursor);
+	    
+    }
+    
+    
+    /* Não funcionou
+    public static void ativarImagem(Scene scene, Stage stage) {
+        // Carrega a imagem
+        Image imagem = new Image(metodo.class.getResourceAsStream("/application/view/f1_vermelho.png"));
+        ImageView imagemView = new ImageView(imagem);
+        imagemView.setFitWidth(32);
+        imagemView.setFitHeight(32);
+        imagemView.setMouseTransparent(true); // Permite que eventos passem "através" da imagem
+
+        // Adiciona a imagem ao topo da cena
+        ((Pane) scene.getRoot()).getChildren().add(imagemView);
+
+        // Atualiza a posição da imagem com base no mouse
+        scene.setOnMouseMoved(event -> {
+            imagemView.setLayoutX(event.getSceneX() + 10); // desloca 10px à direita
+            imagemView.setLayoutY(event.getSceneY() - 16); // centraliza verticalmente
+        });
+    }*/
+    
 }
