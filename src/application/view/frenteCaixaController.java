@@ -27,11 +27,13 @@ public class frenteCaixaController {
     @FXML private TextField txtQuantidade;    
     @FXML private TextField txtBusca;
     @FXML private Label lblTipoBusca;
+    //TABLE VIEW PARA BUSCAR OS PRODUTOS
     @FXML private TableView<produtoModel> tabItem;
     @FXML private TableColumn<produtoModel, String> tabDescricao;
     @FXML private TableColumn<produtoModel, String> tabID;
     private ObservableList<produtoModel> produtoList;
     
+    //TABLE VIEW PARA INSERIR OS ITENS DO PEDIDO
     @FXML private TableView<itemModel> tabItemPedido;
     @FXML private TableColumn<itemModel, Integer> colQuantidade;
     @FXML private TableColumn<itemModel, String> colCodBarra;
