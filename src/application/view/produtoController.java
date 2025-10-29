@@ -76,7 +76,7 @@ public class produtoController extends formularioController {
 		habilitaCampos(false);
 		
 		produtoDAO dao = new produtoDAO();
-		List<produtoModel> produtos= dao.listarProdutos(desc);
+		List<produtoModel> produtos= dao.listarProdutos(desc,1);
 		produtoList=FXCollections.observableArrayList(produtos);
 		tabDados.setItems(produtoList);
 		
