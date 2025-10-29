@@ -14,7 +14,10 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javafx.scene.layout.AnchorPane;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 import application.dao.pedidoDAO;
 import application.dao.produtoDAO;
@@ -48,6 +51,10 @@ public class frenteCaixaController {
     private ObservableList<itemModel> itensList;
     
     private boolean buscaDescricao=false;
+    
+    DecimalFormat formatoMoeda = new DecimalFormat("R$ #,##0.00");
+    //NumberFormat formatMoeda = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+    NumberFormat formatMoeda = NumberFormat.getCurrencyInstance(Locale.of("pt", "BR"));
 
     @FXML
     private void initialize() {
@@ -58,17 +65,21 @@ public class frenteCaixaController {
 	        // Aqui você pode executar qualquer ação desejada
 	    }
 	});*/
-    	
+    	//PREPARA AS COLUNAS DA TABELA DE BUSCA DE PRODUTO PARA RECEBER OS DADOS
 	    	tabID.setCellValueFactory(new PropertyValueFactory<>("CodBarra"));
 		tabDescricao.setCellValueFactory(new PropertyValueFactory<>("Nome"));
-		
+	
+	//PREPARA AS COLUNAS DA TABELA DE ITENS DO PEDIDO PARA RECEBER OS DADOS	
 		colCodBarra.setCellValueFactory(new PropertyValueFactory<>("CodBarras"));
 		colDescricao.setCellValueFactory(new PropertyValueFactory<>("Descricao"));
 		colQuantidade.setCellValueFactory(new PropertyValueFactory<>("Quantidade"));
-		colValorUn.setCellValueFactory(new PropertyValueFactory<>("PrecoUnitario"));
+		
+		 colValorUn.setCellValueFactory(new PropertyValueFactory<>("PrecoUnitario"));
 		colValorTotal.setCellValueFactory(new PropertyValueFactory<>("ValorTotal"));
+		 
 			
-	    lblPedido.setText(String.valueOf(pedido));	
+	    //lblPedido.setText(String.valueOf(pedido));	
+		lblPedido.setText(String.format("%06d",pedido));
 	    	txtQuantidade.setText("1");
 	    	
 	    formFrenteCaixa.sceneProperty().addListener((obs, oldScene, newScene) -> {// Adiciona listener depois que a cena estiver carregada
@@ -82,7 +93,8 @@ public class frenteCaixaController {
 	                        	if (!pedidoIniciado){
 	                        		pedidoDAO dao= new pedidoDAO();
 	                            pedido=dao.criarPedido();
-	                            lblPedido.setText(String.valueOf(pedido));
+	                            //lblPedido.setText(String.valueOf(pedido));
+	                            lblPedido.setText(String.format("%06d",pedido));
 	                            if (pedido>0) {
 	                            	pedidoIniciado=true;
 	                            }
@@ -120,13 +132,13 @@ public class frenteCaixaController {
 	            });
 	        }
 	    });
-	    
+	    /*
 	    txtQuantidade.addEventFilter(KeyEvent.KEY_TYPED, event -> {
 	        if ("*".equals(event.getCharacter())) {
 	            event.consume(); // Bloqueia o * dentro do edtQuantidade
 	        }
 	    });
-	        
+	        */
 	    txtQuantidade.setOnAction(e-> {
 	    	if(txtQuantidade.getText().trim().isEmpty()) { 	
 	    		txtQuantidade.setText("1");
@@ -152,7 +164,8 @@ public class frenteCaixaController {
 	        	if (!pedidoIniciado) {
 	        		metodo.mensagem("Incluir novo pedido", null,"Aperte 'F1' para iniciar um novo pedido" , "1");
 	        	} else {
-	        		if(!txtBusca.getText().isEmpty()) {
+	        		String textoBusca= txtBusca.getText().replace("%", "");
+	        		if(!textoBusca.isEmpty()) {
 	        		//tabItemVisualizacao(true);
 	        		buscaItem(2);
 	        		tabItem.getSelectionModel().selectFirst();
@@ -172,7 +185,6 @@ public class frenteCaixaController {
             }
             
             if (txtBusca.getText()=="") {
-	            	lblTipoBusca.setText("Código de Barras Produto");
 	            	buscaDescricao=false;
 	            	tabItemVisualizacao(buscaDescricao);            	
             }
@@ -222,7 +234,11 @@ public class frenteCaixaController {
 		        	tabItem.setVisible(status);
 		    		tabItem.setManaged(status);
 		    		//percentual=status;
-		        	if (status) {}        
+		        	if (status) {
+		        		lblTipoBusca.setText("Descrição Produto");
+		        	} else {
+		        		lblTipoBusca.setText("Código de Barras Produto");
+		        	}       
 	    }
         
         public void buscaItem(int tipo){
@@ -247,6 +263,9 @@ public class frenteCaixaController {
 	        			itensList=FXCollections.observableArrayList(itens);
 		    	    		tabItemPedido.setItems(itensList);	        			
 	        		}
-        	txtBusca.setText("");
+	        		txtBusca.setText("");
+	        		txtBusca.requestFocus();
+	        		buscaDescricao=false;
+	        		tabItemVisualizacao(false);
         }
 }
