@@ -22,6 +22,7 @@ import java.util.Locale;
 import application.dao.pedidoDAO;
 import application.dao.produtoDAO;
 import application.model.itemModel;
+import application.model.pedidoModel;
 import application.model.produtoModel;
 import application.util.metodo;
 
@@ -32,6 +33,9 @@ public class frenteCaixaController {
     @FXML private TextField txtBusca;
     @FXML private Label lblTipoBusca;
     @FXML private Label lblPedido;
+    @FXML private Label lblQtdItens;
+    @FXML private Label lblValorTotal;
+    
     private int pedido=0;
     private boolean pedidoIniciado=false;
     
@@ -120,11 +124,13 @@ public class frenteCaixaController {
 	                    case ESCAPE:
 	                        //System.out.println("Fechando formulário...");
 	                        stage.close();
-	                        break;
+	                        break;/*
 	                    case MULTIPLY: // Teclado numérico (*)
-	                    		txtQuantidade.requestFocus(); 
+	                    		event.consume();
+	                    		txtQuantidade.requestFocus();
+	                    		txtQuantidade.setText("");
 	                    	//System.out.println("Teclado numérico * pressionado");
-	                        break;
+	                        break;*/
 	                    default:
 	                    	
 	                        break;
@@ -140,12 +146,13 @@ public class frenteCaixaController {
 	    });
 	        */
 	    txtQuantidade.setOnAction(e-> {
-	    	if(txtQuantidade.getText().trim().isEmpty()) { 	
+	    String vlrQuantidade=txtQuantidade.getText().replace("*", "");
+	    	if(vlrQuantidade.trim().isEmpty()) { 	
 	    		txtQuantidade.setText("1");
 	    		txtBusca.requestFocus();
 	    		
 	    	} else {
-	    		txtQuantidade.setText(String.valueOf(metodo.strToIntDef(txtQuantidade.getText(),1)));
+	    		txtQuantidade.setText(String.valueOf(metodo.strToIntDef(vlrQuantidade,1)));
 	    		//edtQuantidade.setText(Integer.toString(WindowHelper.strToIntDef(edtQuantidade.getText(),1)));
 	    		txtBusca.requestFocus();
 	    	}
@@ -157,7 +164,7 @@ public class frenteCaixaController {
 	        	if (txtBusca.getText().equals("*")) {
 	        		txtBusca.setText(null);
 	        		txtQuantidade.requestFocus(); 
-	                txtQuantidade.setText("");
+	            txtQuantidade.setText("");
 	                return;
 	        	};
 	        	
@@ -179,7 +186,7 @@ public class frenteCaixaController {
             
             if ((key == KeyCode.MULTIPLY) || ("*".equals(event.getText()))) {// Se for o * do teclado numérico
                 //System.out.println("Detectado * do teclado numérico no edtBusca");
-            	event.consume();
+            		event.consume();
                 txtQuantidade.requestFocus(); 
                 txtQuantidade.setText("");
             }
@@ -263,9 +270,21 @@ public class frenteCaixaController {
 	        			itensList=FXCollections.observableArrayList(itens);
 		    	    		tabItemPedido.setItems(itensList);	        			
 	        		}
+	        		txtQuantidade.setText("1");
 	        		txtBusca.setText("");
 	        		txtBusca.requestFocus();
 	        		buscaDescricao=false;
 	        		tabItemVisualizacao(false);
+	        		totalPedido();
         }
+        
+      private void totalPedido() {
+    	  	//pedidoDAO dao = new pedidoDAO();
+  		//List<pedidoModel> pedido = dao.resumoPedido(pedido);
+    	  	List<pedidoModel> resumoPedido = pedidoDAO.resumoPedido(pedido);
+    	  	pedidoModel resumo = resumoPedido.get(0);
+    	  	lblValorTotal.setText(String.valueOf(resumo.getValorTotal()));
+    	  	lblQtdItens.setText(String.valueOf(resumo.getQuantidade()));
+    	  
+      }  
 }

@@ -10,6 +10,7 @@ import java.util.List;
 
 import application.model.funcionarioModel;
 import application.model.itemModel;
+import application.model.pedidoModel;
 import application.util.conexao;
 
 public class pedidoDAO {
@@ -41,7 +42,7 @@ public class pedidoDAO {
 		PreparedStatement query = null;
 		try {
 			conn=conexao.getConnection();
-			String sql = "INSERT INTO itens_pedido (id_pedido, id_produto	, quantidade, preco_unitario, desconto ,data_cadastro,data_alteracao) "+
+			String sql = "INSERT INTO itens_pedido (id_pedido, id_produto , quantidade, preco_unitario, desconto ,data_cadastro,data_alteracao) "+
 			"VALUES (?, ?, ?,?, ?, now(), null)";
 			/*(select id_produto from produtos where codbarras=?)*/
 		    query = conn.prepareStatement(sql);
@@ -111,4 +112,40 @@ public class pedidoDAO {
 		}
 		return itens;
 	}
+	
+	public static List<pedidoModel> resumoPedido(int codPedido){
+		Connection conn = null;
+		PreparedStatement query=null;
+		ResultSet resultado=null;
+		
+		List <pedidoModel> pedido = new ArrayList <pedidoModel>();
+		try {
+			conn=conexao.getConnection();
+			if(conn==null) return pedido;			
+			
+			String sql="select count(*) Quantidade, sum(i.quantidade) Volumes, sum(i.valor_total) Vlr_Total from pedidos p inner join itens_pedido i on p.id_pedido=i.id_pedido where p.id_pedido=?";
+			query=conn.prepareStatement(sql);
+			query.setInt(1, codPedido);
+			 
+			
+			resultado = query.executeQuery();
+			
+			while(resultado.next()) {
+				pedidoModel p = new pedidoModel(
+						resultado.getInt("Quantidade"),
+						resultado.getInt("Volumes"),
+						resultado.getInt("Vlr_Total")	
+						);
+				p.setQuantidade(resultado.getInt("Quantidade"));
+				p.setVolume(resultado.getInt("Volumes"));
+				p.setValorTotal(resultado.getDouble("Vlr_Total"));
+				pedido.add(p);
+			}
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return pedido;
+	}
+
 }
