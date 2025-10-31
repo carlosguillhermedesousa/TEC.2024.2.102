@@ -67,6 +67,7 @@ public class loginController {
     		/*CONFIGURA PROPIEDADES DA TELA OU FORMULÁRIO*/
     		stage.setScene(scene);
     		stage.setTitle("Sistema by Carlos Guilherme");//TITULO DO FORMULÁRIO
+    		stage.getIcons().add(new Image(getClass().getResourceAsStream("/application/util/icon_2.png")));
     		stage.centerOnScreen();//ENTRALIZAR FORMULÁRIO
     		stage.setMaximized(true);//INICIALIZA FORMULÁRIO MAXIMIZADO
     		// Evento de fechamento
