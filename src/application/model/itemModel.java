@@ -9,9 +9,9 @@ public class itemModel {
     private int quantidade;
     private String codBarras;
     private String Descricao;
-    private Double preco_unitario;
-    private Double desconto;
-    private Double valor_total;
+    private String preco_unitario;
+    private String desconto;
+    private String valor_total;
     private Date data_cadastro;
     private Date data_alteracao;
 
@@ -22,9 +22,9 @@ public class itemModel {
             int quantidade,
             String codBarras,
             String Descricao,
-            Double preco_unitario,
-            Double desconto,
-            Double valor_total,
+            String preco_unitario,
+            String desconto,
+            String valor_total,
             Date data_cadastro,
             Date data_alteracao
     ) {
@@ -61,14 +61,14 @@ public class itemModel {
     public String getDescricao() { return Descricao; }
     public void setDescricao(String Descricao) { this.Descricao = Descricao; }
 
-    public Double getPrecoUnitario() { return preco_unitario; }
-    public void setPrecoUnitario(Double preco_unitario) { this.preco_unitario = preco_unitario; }
+    public String getPrecoUnitario() { return preco_unitario; }
+    public void setPrecoUnitario(String preco_unitario) { this.preco_unitario = preco_unitario; }
 
-    public Double getDesconto() { return desconto; }
-    public void setDesconto(Double desconto) { this.desconto = desconto; }
+    public String getDesconto() { return desconto; }
+    public void setDesconto(String desconto) { this.desconto = desconto; }
 
-    public Double getValorTotal() { return valor_total; }
-    public void setValorTotal(Double valor_total) { this.valor_total = valor_total; }
+    public String getValorTotal() { return valor_total; }
+    public void setValorTotal(String valor_total) { this.valor_total = valor_total; }
 
     public Date getDataCadastro() { return data_cadastro; }
     public void setDataCadastro(Date data_cadastro) { this.data_cadastro = data_cadastro; }

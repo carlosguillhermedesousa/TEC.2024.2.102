@@ -129,6 +129,14 @@ public class metodo {
             return defaultValue;
         }
     }
+	
+	public static double strToDoubleDef(String x, double defaultValue) {
+	    try {
+	        return Double.parseDouble(x.replace(",", "."));
+	    } catch (NumberFormatException e) {
+	        return defaultValue;
+	    }
+	}
 
     public static boolean mensagemConfirmacao(String titulo, String cabecalho, String texto) {
         Alert alert = new Alert(AlertType.CONFIRMATION);

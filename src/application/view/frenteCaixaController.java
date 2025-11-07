@@ -50,8 +50,8 @@ public class frenteCaixaController {
     @FXML private TableColumn<itemModel, Integer> colQuantidade;
     @FXML private TableColumn<itemModel, String> colCodBarra;
     @FXML private TableColumn<itemModel, String> colDescricao;
-    @FXML private TableColumn<itemModel, Double> colValorTotal;
-    @FXML private TableColumn<itemModel, Double> colValorUn;
+    @FXML private TableColumn<itemModel, String> colValorTotal;
+    @FXML private TableColumn<itemModel, String> colValorUn;
     private ObservableList<itemModel> itensList;
     
     private boolean buscaDescricao=false;
@@ -71,14 +71,14 @@ public class frenteCaixaController {
 	});*/
     	//PREPARA AS COLUNAS DA TABELA DE BUSCA DE PRODUTO PARA RECEBER OS DADOS
 	    	tabID.setCellValueFactory(new PropertyValueFactory<>("CodBarra"));
-		tabDescricao.setCellValueFactory(new PropertyValueFactory<>("Nome"));
+		tabDescricao.setCellValueFactory(new PropertyValueFactory<>("nome"));
 	
 	//PREPARA AS COLUNAS DA TABELA DE ITENS DO PEDIDO PARA RECEBER OS DADOS	
 		colCodBarra.setCellValueFactory(new PropertyValueFactory<>("CodBarras"));
 		colDescricao.setCellValueFactory(new PropertyValueFactory<>("Descricao"));
 		colQuantidade.setCellValueFactory(new PropertyValueFactory<>("Quantidade"));
 		
-		 colValorUn.setCellValueFactory(new PropertyValueFactory<>("PrecoUnitario"));
+		colValorUn.setCellValueFactory(new PropertyValueFactory<>("PrecoUnitario"));
 		colValorTotal.setCellValueFactory(new PropertyValueFactory<>("ValorTotal"));
 		 
 			
@@ -94,23 +94,13 @@ public class frenteCaixaController {
 	
 	                switch (key) {
 	                    case F1:
-	                        	if (!pedidoIniciado){
-	                        		pedidoDAO dao= new pedidoDAO();
-	                            pedido=dao.criarPedido();
-	                            //lblPedido.setText(String.valueOf(pedido));
-	                            lblPedido.setText(String.format("%06d",pedido));
-	                            if (pedido>0) {
-	                            	pedidoIniciado=true;
-	                            }
-	                    		} else {
-	                    			metodo.mensagem("Pedido", null, "Já existem um Pedido em aberto!", "1");
-	                    		}
+	                        	inserirPedido();
 	                        break;
 	                    case F2:
-	                        System.out.println("F2 pressionado");
+	                        inserirItem();
 	                        break;
 	                    case F3:
-	                        System.out.println("F3 pressionado ");
+	                        buscaProduto();
 	                        break;
 	                    case F8:
 	                        if(pedidoIniciado) {
@@ -197,11 +187,7 @@ public class frenteCaixaController {
             }
             
             if (key == KeyCode.DIGIT5 && event.isShiftDown()) {  
-	            	if (!buscaDescricao) {
-	            		buscaDescricao=true;
-	            		lblTipoBusca.setText("Descrição Produto");
-	            		txtBusca.setText("");
-	            	}
+	            buscaProduto();
             }
             
             if (key == KeyCode.DOWN) {
@@ -235,7 +221,7 @@ public class frenteCaixaController {
         		
         	});
     
-    }
+    	}
         
 	    private void tabItemVisualizacao(boolean status) {
 		        	tabItem.setVisible(status);
@@ -255,36 +241,85 @@ public class frenteCaixaController {
 	    		tabItem.setItems(produtoList);	    		
         }
         
-        public void inserirNovoItem() {
-        		pedidoDAO dao = new pedidoDAO();
-			 boolean ok = dao.inserirItemPedido(pedido, 
-					 tabItem.getSelectionModel().getSelectedItem().getID(), 
-				 Integer.valueOf(txtQuantidade.getText()), 
-				 tabItem.getSelectionModel().getSelectedItem().getPreco(), 
-				 0, 
-				 tabItem.getSelectionModel().getSelectedItem().getPreco()*Integer.valueOf(txtQuantidade.getText())
-				);	 
-		 
-	        		if (ok) {      			
-	        			List<itemModel> itens= dao.listarItensPedido(pedido);
-	        			itensList=FXCollections.observableArrayList(itens);
-		    	    		tabItemPedido.setItems(itensList);	        			
-	        		}
+	    public void inserirNovoItem() {
+		    	if (!tabItem.getSelectionModel().isEmpty()) {
+		    		pedidoDAO dao = new pedidoDAO();
+				 boolean ok = dao.inserirItemPedido(pedido, 
+						 tabItem.getSelectionModel().getSelectedItem().getID(), 
+					 Integer.valueOf(txtQuantidade.getText()), 
+					 metodo.strToDoubleDef(tabItem.getSelectionModel().getSelectedItem().getPreco(),0), 
+					 0, 
+					 metodo.strToDoubleDef(tabItem.getSelectionModel().getSelectedItem().getPreco(),0)*Integer.valueOf(txtQuantidade.getText())
+					);	 
+			 
+			        		if (ok) {      			
+			        			List<itemModel> itens= dao.listarItensPedido(pedido);
+			        			itensList=FXCollections.observableArrayList(itens);
+				    	    		tabItemPedido.setItems(itensList);	        			
+			        		} else {
+			        			metodo.mensagem("Inserir Item",null , "Erro ao Inserir Item.", "3");
+			        		}
+		        		} else {
+		        			metodo.mensagem("Inserir Item",null , "Item Não Encontrado.", "3");
+		        		}
+	        		
 	        		txtQuantidade.setText("1");
 	        		txtBusca.setText("");
 	        		txtBusca.requestFocus();
 	        		buscaDescricao=false;
 	        		tabItemVisualizacao(false);
 	        		totalPedido();
-        }
+	    }
         
-      private void totalPedido() {
-    	  	//pedidoDAO dao = new pedidoDAO();
-  		//List<pedidoModel> pedido = dao.resumoPedido(pedido);
-    	  	List<pedidoModel> resumoPedido = pedidoDAO.resumoPedido(pedido);
-    	  	pedidoModel resumo = resumoPedido.get(0);
-    	  	lblValorTotal.setText(String.valueOf(resumo.getValorTotal()));
-    	  	lblQtdItens.setText(String.valueOf(resumo.getQuantidade()));
-    	  
-      }  
+	  private void totalPedido() {
+		  	//pedidoDAO dao = new pedidoDAO();
+		//List<pedidoModel> pedido = dao.resumoPedido(pedido);
+		  	List<pedidoModel> resumoPedido = pedidoDAO.resumoPedido(pedido);
+		  	pedidoModel resumo = resumoPedido.get(0);
+		  	lblValorTotal.setText(String.valueOf(formatoMoeda.format(resumo.getValorTotal())));
+		  	lblQtdItens.setText(String.valueOf(resumo.getQuantidade()));
+		  
+	  }  
+      
+      public void inserirPedido() {
+    	  if (!pedidoIniciado){
+      		pedidoDAO dao= new pedidoDAO();
+          pedido=dao.criarPedido();
+          //lblPedido.setText(String.valueOf(pedido));
+          lblPedido.setText(String.format("%06d",pedido));
+          if (pedido>0) {
+          	pedidoIniciado=true;
+          }
+  		} else {
+  			metodo.mensagem("Pedido", null, "Já existem um Pedido em aberto!", "1");
+  		}
+      }
+      
+      public void finalizarPedido(int idPedido){
+    	  	
+      }
+      
+      public void inserirItem() {
+    	  if (pedidoIniciado && pedido>0){        		
+            txtBusca.requestFocus();
+    		} else {
+    			metodo.mensagem("Item do Pedido", null, "Não existem um Pedido em digitação!", "1");
+    		}
+      }
+      
+      public void buscaProduto() {
+    		if (!buscaDescricao) {
+        		buscaDescricao=true;
+        		lblTipoBusca.setText("Descrição Produto");
+        		txtBusca.setText("");
+        	}
+      }
+      
+      public void inicioTela(){
+	    	  buscaDescricao=false;
+	    	  pedido=0;
+	    	  pedidoIniciado=false;
+	    	  lblPedido.setText(String.format("%06d",pedido));
+		  txtQuantidade.setText("1");
+      }
 }

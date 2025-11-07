@@ -54,7 +54,7 @@ public class funcionarioController extends formularioController {
 						txtUsuario.setText(novaSelecao.getUsuario());
 						txtSenha.setText(novaSelecao.getSenha());
 						txtDataCadastro.setText(novaSelecao.getDataCadastro().toString());
-						
+						dtCadastro.setValue(((java.sql.Date) novaSelecao.getDataCadastro()).toLocalDate());
 					}
 				});
 		//tabDados.setFocusTraversable(true);
@@ -86,6 +86,7 @@ public class funcionarioController extends formularioController {
 				txtUsuario.setText(funcionario.getUsuario());
 				txtSenha.setText(funcionario.getSenha());
 				txtDataCadastro.setText(funcionario.getDataCadastro().toString());
+				dtCadastro.setValue(((java.sql.Date) funcionario.getDataCadastro()).toLocalDate());
 			}
 		}
 	}

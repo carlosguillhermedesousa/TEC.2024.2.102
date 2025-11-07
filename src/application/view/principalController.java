@@ -9,6 +9,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class principalController {
 
@@ -58,6 +59,7 @@ public class principalController {
 		Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
 		Stage stageLogin = new Stage();
 		stageLogin.setScene(new Scene(root));
+		stageLogin.initStyle(StageStyle.UNDECORATED);
 		stageLogin.centerOnScreen();
 		stageLogin.show();
 		} catch(Exception e) {
@@ -89,6 +91,12 @@ public class principalController {
 	public void abrirCliente() {
 		carregaTelas("cliente.fxml","Sistema | Cadastro de Clientes");
 	}
+	
+	public void abrirRelatorioVendas() {
+		//carregaTelas("relatorioVendas.fxml","Sistema | Relatório de Vendas");
+		metodo.abrirJanela("relatorioVendas.fxml", "Relatório de Vendas");
+	}
+	
 	@FXML 
 	private void abrirFrenteCaixa() {
     	 metodo.abrirJanelaModal("frenteCaixa.fxml", null,  ((Stage) form.getScene().getWindow()));

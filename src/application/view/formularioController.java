@@ -99,6 +99,9 @@ public class formularioController {
 	    	for(javafx.scene.Node node : formCadastro.getChildren()) {
 	    		if(node instanceof TextField) {
 	    			((TextField) node).setDisable(!status);
+	    			if ("txtEstoque".equals(node.getId())) {
+	    				((TextField) node).setDisable(true);
+	    			}
 	    			
 	    		}
 	    	}
@@ -106,10 +109,11 @@ public class formularioController {
     
     protected void limpaCampos() {
     		for(javafx.scene.Node node : formCadastro.getChildren()) {
-    		if(node instanceof TextField) {
-    			((TextField) node).clear();
-    			
-    			}
+	    		if(node instanceof TextField) {
+	    			((TextField) node).clear();
+	    			
+	    			}
+    		dtCadastro.setValue(null);
     		}
     }
     

@@ -32,7 +32,7 @@
             </Menu>
             <Menu mnemonicParsing="false" text="Relatórios">
                <items>
-                  <MenuItem mnemonicParsing="false" text="Relatório de Vendas" />
+                  <MenuItem mnemonicParsing="false" onAction="#abrirRelatorioVendas" text="Relatório de Vendas" />
                   <MenuItem mnemonicParsing="false" text="Relatório de Estoque" />
                </items>
             </Menu>

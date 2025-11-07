@@ -6,7 +6,7 @@ public class produtoModel {
 	private int id_produto;
     private String nome;
     private String descricao;
-    private Double preco;
+    private String preco;
     private int estoque;
     private String codBarra;
     private Date data_cadastro;
@@ -17,7 +17,7 @@ public class produtoModel {
             String nome,
             String descricao,
             String codBarra,
-            Double preco,
+            String preco,
             int estoque,
             Date data_cadastro,
             Date data_alteracao
@@ -46,8 +46,8 @@ public class produtoModel {
     public String getCodBarra() {return codBarra; }
     public void setCodBarra(String codBarra) {this.codBarra = codBarra;}
 
-    public Double getPreco() {return preco;}
-    public void setPreco(Double preco) {this.preco = preco;}
+    public String getPreco() {return preco;}
+    public void setPreco(String preco) {this.preco = preco;}
 
     public int getEstoque() {return estoque;}
     public void setEstoque(int estoque) {this.estoque = estoque;}

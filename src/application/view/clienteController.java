@@ -1,5 +1,7 @@
 package application.view;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 
@@ -10,6 +12,7 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -48,7 +51,7 @@ public class clienteController extends formularioController {
 						txtTelefone.setText(novaSelecao.getTelefone());
 						txtEmail.setText(novaSelecao.getEmail());
 						txtDataCadastro.setText(novaSelecao.getDataCadastro().toString());
-						
+						dtCadastro.setValue(((java.sql.Date) novaSelecao.getDataCadastro()).toLocalDate());
 					}
 				});
 		//tabDados.setFocusTraversable(true);
@@ -77,6 +80,7 @@ public class clienteController extends formularioController {
 				txtTelefone.setText(cliente.getTelefone());
 				txtEmail.setText(cliente.getEmail());
 				txtDataCadastro.setText(cliente.getDataCadastro().toString());
+				dtCadastro.setValue(((java.sql.Date) cliente.getDataCadastro()).toLocalDate());
 			}
 		}
 	}

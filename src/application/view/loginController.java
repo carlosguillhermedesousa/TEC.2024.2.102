@@ -1,7 +1,13 @@
 package application.view;
 
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
 import application.dao.funcionarioDAO;
 import application.util.metodo;
+import application.util.sessao;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.ImageCursor;
@@ -14,6 +20,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import application.util.metodo;
 
 public class loginController {
@@ -51,11 +58,13 @@ public class loginController {
     		mensagem.setHeaderText(null);//REMOVE O CABEÇALHO DA MENSAGEM
     		mensagem.setContentText("Bem vindo ao Sistema "+usuario);//TEXTO DO CORPO DA MENSAGEM
     		mensagem.showAndWait();//MOSTRA A MENSAGEM*/
-    		
-    		metodo.mensagem("Confirmação", null, "Bem vindo Ao Sistema", "1");
+    		sessao.iniciar(usuario, 30);
+    		String usuarioLogado=sessao.getInstancia().getUsuario();
+    		metodo.mensagem("Confirmação", null, "Bem vindo Ao Sistema "+usuarioLogado, "1");
     		
     		/*FECHAR TELA DE LOGIN*/
     		btnEntrar.getScene().getWindow().hide();
+    		/*FIM FECHAR TELA DE LOGIN*/
     		try {
     		Parent root = FXMLLoader.load(getClass().getResource("principal.fxml"));
     		
@@ -79,6 +88,32 @@ public class loginController {
 	            }
 	        });
     		stage.show();//MOSTRA O FORMULÁRIO
+    		
+    		// Verifica expiração da sessão a cada minuto
+            ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
+            scheduler.scheduleAtFixedRate(() -> {
+                if (sessao.getInstancia() != null && sessao.getInstancia().isExpirada()) {
+                    Platform.runLater(() -> {
+                        sessao.encerrar();
+                        stage.hide();
+                        try {
+                            Parent roott = FXMLLoader.load(getClass().getResource("login.fxml"));
+                            Stage stageLogin = new Stage();
+                            stageLogin.setScene(new Scene(roott));
+                            stageLogin.getIcons().add(new Image(metodo.class.getResourceAsStream("/application/util/icon_2.png")));
+                            stageLogin.initStyle(StageStyle.UNDECORATED);
+                            stageLogin.centerOnScreen();
+                            stageLogin.show();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        
+                    });
+                    scheduler.shutdown();
+                }
+            }, 0, 1, TimeUnit.MINUTES);
+        // Fim verifica expiração da sessão a cada minuto  
+            
     		}catch(Exception e) {
     			e.printStackTrace();
     		}

@@ -62,7 +62,7 @@ public class produtoController extends formularioController {
 						txtEstoque.setText(String.valueOf(novaSelecao.getEstoque()));
 						txtPreco.setText(novaSelecao.getPreco().toString());
 						txtData.setText(novaSelecao.getDataCadastro().toString());
-						
+						dtCadastro.setValue(((java.sql.Date) novaSelecao.getDataCadastro()).toLocalDate());
 					}
 				});
 		//tabDados.setFocusTraversable(true);
@@ -96,7 +96,7 @@ public class produtoController extends formularioController {
 				txtEstoque.setText(String.valueOf(produto.getEstoque()));
 				txtPreco.setText(produto.getPreco().toString());
 				txtData.setText(produto.getDataCadastro().toString());
-				//dtCadastro.setValue(produto.getDataCadastro().toLocalDate());
+				dtCadastro.setValue(((java.sql.Date) produto.getDataCadastro()).toLocalDate());
 				
 			}
 		}
@@ -108,8 +108,8 @@ public class produtoController extends formularioController {
 		String nome=txtNome.getText();
 		String descricao=txtDescricao.getText();
 		String codBarra=txtCodBarra.getText();
-		Integer estoque=Integer.valueOf(txtEstoque.getText());
-		Double preco=Double.valueOf(txtPreco.getText());
+		Integer estoque=metodo.strToIntDef(txtEstoque.getText(),0);
+		String preco=txtPreco.getText();//metodo.strToDoubleDef(txtPreco.getText(),0);
 		Date data=new Date();
 		
 		if(statusForm==1) {

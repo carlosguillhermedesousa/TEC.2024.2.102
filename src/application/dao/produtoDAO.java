@@ -8,6 +8,7 @@ import java.util.List;
 
 import application.model.produtoModel;
 import application.util.conexao;
+import application.util.metodo;
 
 public class produtoDAO {
 	//LISTAR
@@ -21,15 +22,15 @@ public class produtoDAO {
 			try {
 				conn=conexao.getConnection();
 				if(conn==null) return produtos;
-				String sql="select *from produtos";
+				String sql="select id_produto,nome,descricao,codbarras,REPLACE(FORMAT(preco, 2), '.', ',') as preco,estoque,id_empresa,data_cadastro,data_alteracao from produtos";
 				
 				if(desc!=null && !desc.isEmpty()) {
 					if (tipo==1) {
-					 sql="select * from produtos where nome like ?";
+					 sql="select id_produto,nome,descricao,codbarras,REPLACE(FORMAT(preco, 2), '.', ',') as preco,estoque,id_empresa,data_cadastro,data_alteracao from produtos where nome like ?";
 					 query=conn.prepareStatement(sql);
 					 query.setString(1, "%"+desc+"%");
 					} else if(tipo==2) {
-					 sql="select * from produtos where codbarras = ?";
+					 sql="select id_produto,nome,descricao,codbarras,REPLACE(FORMAT(preco, 2), '.', ',') as preco,estoque,id_empresa,data_cadastro,data_alteracao from produtos where codbarras = ?";
 					 query=conn.prepareStatement(sql);
 					 query.setString(1, desc);
 					}
@@ -46,7 +47,7 @@ public class produtoDAO {
 							resultado.getString("nome"),
 							resultado.getString("descricao"),
 							resultado.getString("codbarras"),
-							resultado.getDouble("preco"),
+							resultado.getString("preco"),
 							resultado.getInt("estoque"),
 							resultado.getDate("data_cadastro"),
 							resultado.getDate("data_alteracao")				
@@ -55,7 +56,7 @@ public class produtoDAO {
 					p.setNome(resultado.getString("nome"));
 					p.setDescricao(resultado.getString("descricao"));
 					p.setCodBarra(resultado.getString("codbarras"));
-					p.setPreco(resultado.getDouble("preco"));
+					p.setPreco(resultado.getString("preco"));
 					p.setEstoque(resultado.getInt("estoque"));
 					p.setDataCadastro(resultado.getDate("data_cadastro"));
 					p.setDataAlteracao(resultado.getDate("data_alteracao"));
@@ -82,7 +83,7 @@ public class produtoDAO {
 			query.setString(1, p.getNome());
 			query.setString(2, p.getDescricao());
 			query.setString(3, p.getCodBarra());
-			query.setDouble(4, p.getPreco());
+			query.setDouble(4, metodo.strToDoubleDef(p.getPreco(),0));
 			query.setInt(5, p.getEstoque());
 			
 			
@@ -110,7 +111,7 @@ public class produtoDAO {
 			query.setString(1, p.getNome());
 			query.setString(2, p.getDescricao());
 			query.setString(3, p.getCodBarra());
-			query.setDouble(4, p.getPreco());
+			query.setDouble(4, metodo.strToDoubleDef(p.getPreco(),0));
 			query.setInt(5, p.getEstoque());
 			query.setInt(6, p.getID());
 			
